@@ -24,7 +24,7 @@ label{
 }
 
 main{
-    background-color: lightgray;
+    
     width: 100%;
 }
 
@@ -32,8 +32,9 @@ main{
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     padding: 20px;
+    background-color: lightgray;
+    min-height: 100vh;
 }
 
 .card{

@@ -2,28 +2,30 @@
 
 const iconsList = datiIniziali;
 const cardsContainer = document.getElementById("container");
+const filterSelect = document.getElementById("select");
 
-IconsDisplay(iconsList)
-
-/*
-function IconsDisplay(icons){
-    console.log("Log di icons", icons);
-    for(let i=0; i< icons.length; i++){
-        cardsContainer.innerHTML += ` <div class="card">
-                                <i class="${icons[i].family} ${icons[i].prefix}${icons[i].name}"></i>
-                                <h4>${icons[i].name}</h4>
-                            </div>`
-    }
-
-}
-*/
+// generate a copy of the given iconsList
+const newIconsList = NewIconsListGenerator();
+// call th function to display the icons
+IconsDisplay();
 
 
+// Event Listener to display the icons according to the selected filter once it's changed
+filterSelect.addEventListener("change", function(){
+    IconsDisplay()
+})
 
-function IconsDisplay(icons){
+// function to display the icons 
+function IconsDisplay(){
+    let filter = filterSelect.value;
+ 
+    // empty the container to display only the wanted icons
+    cardsContainer.innerHTML = "";
 
-    icons.forEach(icon => {
+
+    newIconsList.forEach(icon => {
         let iconColor;
+        // switch to give the icons a different color according to the different types
         switch (icon.type){
             case "animal" :
                 iconColor = "blue";
@@ -35,16 +37,38 @@ function IconsDisplay(icons){
                 iconColor = "purple";
                 break
         }
-        CardGenerator(icon, iconColor)
+        // condition to select only the wanted icons to display
+        if(filter == "all" || filter == icon.type){
+            CardGenerator(icon, iconColor)
+        }
     });
 } 
 
+// function to write into the html all the elemet that we want to display
 function CardGenerator(element, color){
-    console.log(element);
-    console.log(color);
+
     const card =   `<div class="card">
                         <i class="${element.family} ${element.prefix}${element.name}" style="color:${color}"></i>
                         <h4>${element.name}</h4>
                     </div>`
     cardsContainer.innerHTML += card
+}
+
+
+// function to generate a copy of the given list
+function NewIconsListGenerator(){
+
+    let newList = iconsList.map(icon => {
+
+        const { name, prefix, type, family } = icon;
+    
+        let newIcon = {
+            name,
+            prefix,
+            type,
+            family
+        }
+        return newIcon;
+    });
+    return newList   
 }
