@@ -1,4 +1,4 @@
-[
+const datiIniziali = [
 	{
 		name: 'cat',
 		prefix: 'fa-',
